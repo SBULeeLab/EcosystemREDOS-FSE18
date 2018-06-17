@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # Author: Jamie Davis <davisjam@vt.edu>
 # Description:
 #   For a dataset exploring the performance of an algorithm,
