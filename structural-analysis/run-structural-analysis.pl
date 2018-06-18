@@ -164,7 +164,7 @@ sub contains {
 #     wrapper: absolute path to the analysis wrapper
 #     resultName: member of the result object containing the result
 sub getAnalyses {
-  my $wrapperPrefix = "$ENV{ECOSYSTEM_REGEXP_PROJECT_ROOT}/analyze-regexps/structural-analysis/";
+  my $wrapperPrefix = "$ENV{ECOSYSTEM_REGEXP_PROJECT_ROOT}/structural-analysis/";
 
   my %name2wrapper;
   $name2wrapper{"any-qoa"} = { "resultName" => "anyQOA" };
