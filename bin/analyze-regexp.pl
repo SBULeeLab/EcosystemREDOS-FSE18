@@ -40,23 +40,33 @@ if (not -f $patternFile) {
   die "Error, no such file: $patternFile\n";
 }
 
-my $i = 1;
+my $i = 0;
 open(my $FH, "<", "$patternFile") or die "Error, could not open $patternFile: $!\n";
 while (my $line = <$FH>) {
+  $i++;
+  chomp $line;
   # Skip non-JSON things.
   next if ($line !~ m/^\s*{.*}\s*$/);
 
-  &log("Processing pattern $i");
-  $i++;
+  &log("Processing entry $i");
   my $pattern = decode_json($line);
 
-  &log("Analyzing pattern /$pattern->{pattern}/");
+  my $isValid = 1;
+  for my $key ("pattern", "language") {
+    if (not $pattern->{$key}) {
+      &log("Error, invalid entry: missing key '$key' in JSON object: line $i: <$line>");
+      $isValid = 0;
+    }
+  }
+  next if (not $isValid);
+
+  &log("Entry $i: Analyzing pattern /$pattern->{pattern}/");
   my $superLinearResult = &runSuperLinearAnalysis($pattern);
   my $degreeOfVulnResult = &runDegreeOfVulnAnalysis($pattern, $superLinearResult);
   my $structuralResult = &runStructuralAnalysis($pattern);
   my $semanticResult = &runSemanticAnalysis($pattern);
 
-  &log("Emitting result");
+  &log("Entry $i: Emitting result");
   my $fullAnalysis = {
     "pattern" => $pattern,
     "superLinear" => $superLinearResult,
@@ -94,7 +104,14 @@ sub runSuperLinearAnalysis {
 sub runDegreeOfVulnAnalysis {
   my ($pattern, $superLinearResult) = @_;
 
-  # If vulnerable, 
+  if (not $superLinearResult->{isVulnerable}) {
+    return {};
+  }
+
+  # TODO I AM HERE
+  # If vulnerable, run a succession of queries varying the number of pumps.
+
+  # Then estimate regex match time as a function of the number of pumps.
 
   return {};
 }
