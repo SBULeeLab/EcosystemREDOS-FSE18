@@ -7,12 +7,12 @@ This paper describes a study in which we:
 - analyzed the regexes along several dimensions
 
 Our artifact consists of:
-- Code to analyze a regex for super-linear performance (Table 1), degree of vulnerability (Table 2), semantic meaning (Table 3), and use of anti-patterns (Table 4)
+- Code to analyze a regex for super-linear performance (Table 1), degree of vulnerability (Table 2), semantic meaning (Table 3), and use of anti-patterns (Table 4).
 - Unique regexes collected from npm and pypi modules. We are releasing these regexes raw (without analysis or source module(s)) due to security concerns.
 
 In addition, we wrote code to statically extract regexes from npm and pypi modules.
-We released this code as part of our [vuln-regex-detector] software, available [here](https://github.com/davisjam/vuln-regex-detector).
-This portion of our analysis was uninteresting from a scientific perspective so we do not elaborate on it in this artifact.
+We released this code as part of our `vuln-regex-detector` software, available [here](https://github.com/davisjam/vuln-regex-detector).
+Regex extraction was uninteresting from a scientific perspective so we do not elaborate on it in this artifact.
 
 In addition to this directory's `README.md`, each sub-tree comes with one or more READMEs describing the software and tests.
 
