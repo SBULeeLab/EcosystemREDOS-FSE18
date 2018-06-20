@@ -102,7 +102,7 @@ sub runSuperLinearAnalysis {
     "pattern" => $pattern->{pattern},
     "detectVuln_detectors" => ["weideman-RegexStaticAnalysis", "wuestholz-RegexCheck", "rathnayake-rxxr2"],
     "detectVuln_timeLimit" => 60,
-    "detectVuln_memoryLimit" => 1024,
+    "detectVuln_memoryLimit" => 8*1024,
     "validateVuln_language" => $pattern->{language},
   };
   my $queryFile = "/tmp/superLinearAnalysis-queryFile-$$.json";
