@@ -123,12 +123,42 @@ sub runDegreeOfVulnAnalysis {
     return {};
   }
 
-  # TODO I AM HERE
+  my $queryFile = "/tmp/degreeOfVulnAnalysis-queryFile-$$.json";
+
   # If vulnerable, run a succession of queries varying the number of pumps.
+  my $pumpStart = 10;
+  my $maxPumps = 100;
+  my $timeLimit = 5;
 
-  # Then estimate regex match time as a function of the number of pumps.
+  my @degreeOfVulnResults;
 
-  return {};
+  # For each detector's opinion
+  for my $do (@{$superLinearResult->{detectReport}->{detectorOpinions}}) {
+    # For the opinions that said "this is not safe"
+    if ($do->{hasOpinion} and $do->{opinion}->{canAnalyze} and not $do->{opinion}->{isSafe}) {
+      for my $evilInput (@{$do->{opinion}->{evilInput}}) {
+        next if ($evilInput eq "COULD-NOT-PARSE");
+        my $query = {
+          "language" => $pattern->{language},
+          "pattern" => $pattern->{pattern},
+          "evilInput" => $evilInput,
+          "pumpStart" => $pumpStart,
+          "maxPumps" => $maxPumps,
+          "timeLimit" => $timeLimit,
+        };
+        &writeToFile("file"=>$queryFile, "contents"=>encode_json($query));
+        my $out = &chkcmd("$degreeOfVulnAnalysis $queryFile 2>>$LOG_FILE");
+        chomp $out;
+        &log("degreeOfVulnAnalysis: got $out");
+
+        push @degreeOfVulnResults, decode_json($out);
+      }
+    }
+  }
+
+  unlink $queryFile unless $DEBUG;
+
+  return \@degreeOfVulnResults;
 }
 
 sub runStructuralAnalysis {
