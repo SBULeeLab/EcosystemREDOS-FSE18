@@ -100,7 +100,7 @@ sub runSuperLinearAnalysis {
   my $query = {
     "useCache" => 0,
     "pattern" => $pattern->{pattern},
-    "detectVuln_detectors" => ["weideman-RegexStaticAnalysis", "wustholz-RegexCheck", "rathnayake-rxxr2"],
+    "detectVuln_detectors" => ["weideman-RegexStaticAnalysis", "wuestholz-RegexCheck", "rathnayake-rxxr2"],
     "detectVuln_timeLimit" => 60,
     "detectVuln_memoryLimit" => 1024,
     "validateVuln_language" => $pattern->{language},
