@@ -7,9 +7,14 @@ This paper describes a study in which we:
 - analyzed the regexes along several dimensions
 
 Our artifact consists of:
-- code to extract regexes from npm and pypi modules
-- code to analyze these regexes for super-linear performance (Table 1), degree of vulnerability (Table 2), semantic meaning (Table 3), and use of anti-patterns (Table 4)
-- unique regexes collected from npm and pypi modules, without indicating the source module(s) due to security concerns
+- Code to analyze a regex for super-linear performance (Table 1), degree of vulnerability (Table 2), semantic meaning (Table 3), and use of anti-patterns (Table 4)
+- Unique regexes collected from npm and pypi modules. We are releasing these regexes raw (without analysis or source module(s)) due to security concerns.
+
+In addition, we wrote code to statically extract regexes from npm and pypi modules.
+We released this code as part of our [vuln-regex-detector] software, available [here](https://github.com/davisjam/vuln-regex-detector).
+This portion of our analysis was uninteresting from a scientific perspective so we do not elaborate on it in this artifact.
+
+In addition to this directory's `README.md`, each sub-tree comes with one or more READMEs describing the software and tests.
 
 ## Installation
 
@@ -31,26 +36,40 @@ Everything works fine in this container.
 
 ## Use
 
-Export the environment variable `ECOSYSTEM_REGEXP_PROJECT_ROOT` to ensure the scripts know how to find each other.
+### Environment variables
 
-TODO XXX
+Export the following environment variables to ensure the tools know how to find each other.
+- `ECOSYSTEM_REGEXP_PROJECT_ROOT`
+- `VULN_REGEX_DETECTOR_ROOT` (submodule, set it to `ECOSYSTEM_REGEXP_PROJECT_ROOT/vuln-regex-detector`)
+
+See `.env` for examples.
+
+### Analysis phases
+
+Each phase of the analysis is performed by a separate set of tools.
+See the description of the directory structure below for a mapping from research questions to directories.
+
+### Running all of the phases at once
+
+The `full-analysis/analyze-regexp.pl` program runs all of the analysis phases on a list of regexes and prints a summary for each regex.
+Use this to confirm that the code is installed and working. Whether you think it does something interesting or useful is up to you.
 
 ## Directory structure
 
 | File or Directory/    | Description | Relevance to paper |
 | ---------------------:|:-------------------------------------------------------------------------------------------------:|
-| .                     | introductory content | - |
-| README.md             | you're in it | - |
-| LICENSE               | terms of software release | - |
-| INSTALL               | "install instructions" | - |
-| STATUS                | claims of artifact quality | - |
-| data/                 | all unique regexes we extracted from npm and pypi modules | Used to answer RQs 1-4 |
-| vuln-regex-detector/  | is this regex vulnerable? (submodule) | answers RQ1 |
-| degree-of-vuln/       | what is the degree of vulnerability of this regex? | answers RQ2 |
-| semantic-meaning/     | what meaning does this regex appear to capture? | answers RQ3 |
-| anti-patterns/        | check whether a regex contains an anti-pattern | answers RQ4 |
-| visualization/        | used to produce visualizations. Mostly for posterity. | - |
-| bin/                  | use with vuln-regex-detector/ | helps with RQ1 |
+| .                     | Introductory content                                      | - |
+| README.md             | You're in it                                              | - |
+| LICENSE               | Terms of software release                                 | - |
+| INSTALL               | "Install instructions"                                    | - |
+| STATUS                | Claims of artifact quality                                | - |
+| data/                 | All unique regexes we extracted from npm and pypi modules | Used to answer RQs 1-4 |
+| vuln-regex-detector/  | Extract regexes from modules and test for vulnerability. (submodule) | answers RQ1 |
+| degree-of-vuln/       | What is the degree of vulnerability of this regex?        | answers RQ2 |
+| semantic-meaning/     | What meaning does this regex appear to capture?           | answers RQ3 |
+| structural-analysis/  | Check whether a regex contains an anti-pattern            | answers RQ4 |
+| visualization/        | Used to produce visualizations. Mostly for posterity.     | - |
+| full-analysis/        | Run each analysis step on a regex.                        | - |
 
 Each directory contains its own README for additional details.
 
@@ -69,3 +88,24 @@ This environment variable should name the location of your clone of this reposit
 This project uses JSON to describe research data.
 Files named `*.json` are generally JavaScript files that contain one JSON object per line.
 This makes it easy to do a line-by-line analysis on the objects in the file, even if the file is large.
+
+## Contact person
+
+Contact J.C. Davis at davisjam@vt.edu with any questions.
+
+## Related artifacts
+
+### vuln-regex-detector
+
+As noted earlier, we released software called [vuln-regex-detector](https://github.com/davisjam/vuln-regex-detector) on GitHub.
+The vuln-regex-detector project contains:
+- static regex extraction from javascript and python software
+- super-linear behavior checking (we rely on those tools in this artifact, and load vuln-regex-detector as a submodule)
+- a server that responds to "is this regex super-linear?" queries, plus a sample client.
+
+We created an [npm module](https://www.npmjs.com/package/vuln-regex-detector) as a client. This module queries a service we are hosting at Virginia Tech to test regexes for super-linear behavior.
+
+### safe-regex
+
+We recently inherited the widely-used [safe-regex](https://www.npmjs.com/package/safe-regex) module.
+We are in the process of incorporating our structural-analysis anti-pattern detection in this module.

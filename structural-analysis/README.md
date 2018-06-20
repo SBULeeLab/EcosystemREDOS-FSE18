@@ -9,4 +9,5 @@ The results from application to our datasets are summarized in Table 4.
 
 Run `npm run test 2>/dev/null`.
 
-Not all cases pass. See $5.1.2: "Our anti-pattern tests cannot yet label particularly complex regexes, so 20% of the npm vulnerable regexes and 14% of the pypi vulnerable regexes were unlabeled".
+Not all cases pass.
+See $5.1.2: "Our anti-pattern tests cannot yet label particularly complex regexes, so 20% of the npm vulnerable regexes and 14% of the pypi vulnerable regexes were unlabeled".
