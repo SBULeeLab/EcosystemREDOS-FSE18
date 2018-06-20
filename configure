@@ -47,7 +47,7 @@ echo "Dependencies for regexp extraction"
 
 ## npm install
 echo "Running 'npm install' for node scripts"
-for npmInstallDir in anti-patterns/ anti-patterns/regexp-features/;
+for npmInstallDir in structural-analysis/ structural-analysis/regexp-features/;
 do
   cd $npmInstallDir
   npm install
