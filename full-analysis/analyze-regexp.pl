@@ -16,7 +16,7 @@ my $LOG_FILE = "/tmp/analyze-regexp-$$.log";
 
 my $DEBUG = 0;
 if ($ENV{REGEX_DEBUG}) {
-    $DEBUG = 1;
+  $DEBUG = 1;
 }
 
 # Check dependencies.
@@ -79,7 +79,14 @@ while (my $line = <$FH>) {
     "structural" => $structuralResult,
     "semantic" => $semanticResult,
   };
-  print STDOUT encode_json($fullAnalysis) . "\n";
+
+  my $msg;
+  if ($DEBUG) {
+    $msg = JSON::PP->new->pretty(1)->encode($fullAnalysis);
+  } else {
+    $msg = encode_json($fullAnalysis);
+  }
+  print STDOUT $msg . "\n";
 }
 close($FH);
 
