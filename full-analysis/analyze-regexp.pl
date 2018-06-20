@@ -14,6 +14,11 @@ use Carp;
 
 my $LOG_FILE = "/tmp/analyze-regexp-$$.log";
 
+my $DEBUG = 0;
+if ($ENV{REGEX_DEBUG}) {
+    $DEBUG = 1;
+}
+
 # Check dependencies.
 if (not defined $ENV{ECOSYSTEM_REGEXP_PROJECT_ROOT}) {
   die "Error, ECOSYSTEM_REGEXP_PROJECT_ROOT must be defined\n";
@@ -96,7 +101,10 @@ sub runSuperLinearAnalysis {
   my $queryFile = "/tmp/superLinearAnalysis-queryFile-$$.json";
   &writeToFile("file"=>$queryFile, "contents"=>encode_json($query));
   my $out = &chkcmd("$superLinearAnalysis $queryFile 2>>$LOG_FILE");
-  unlink $queryFile;
+  chomp $out;
+  &log("superLinearAnalysis: got $out");
+
+  unlink $queryFile unless $DEBUG;
 
   return decode_json($out);
 }
@@ -125,7 +133,10 @@ sub runStructuralAnalysis {
   my $queryFile = "/tmp/structuralAnalysis-queryFile-$$.json";
   &writeToFile("file"=>$queryFile, "contents"=>encode_json($query));
   my $out = &chkcmd("$structuralAnalysis $queryFile 2>>$LOG_FILE");
-  unlink $queryFile;
+  chomp $out;
+  &log("structuralAnalysis: got $out");
+
+  unlink $queryFile unless $DEBUG;
 
   return decode_json($out);
 }
@@ -139,7 +150,10 @@ sub runSemanticAnalysis {
   my $queryFile = "/tmp/semanticAnalysis-queryFile-$$.json";
   &writeToFile("file"=>$queryFile, "contents"=>encode_json($query));
   my $out = &chkcmd("$semanticAnalysis $queryFile 2>>$LOG_FILE");
-  unlink $queryFile;
+  chomp $out;
+  &log("semanticAnalysis: got $out");
+
+  unlink $queryFile unless $DEBUG;
 
   return decode_json($out);
 }
