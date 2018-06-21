@@ -79,6 +79,7 @@ Use this to confirm that the code is installed and working. Whether you think it
 | semantic-meaning/     | What meaning does this regex appear to capture?           | answers RQ3 |
 | structural-analysis/  | Check whether a regex contains an anti-pattern            | answers RQ4 |
 | visualization/        | Used to produce visualizations. Mostly for posterity.     | - |
+| containerized/        | Dockerfile for building container | - |
 | full-analysis/        | Run each analysis step on a regex.                        | - |
 
 Each directory contains its own README for additional details.
