@@ -30,9 +30,19 @@ Otherwise...alas.
 
 ### Container
 
-To facilitate replication, we have published a containerized version of this project on hub.docker.com: XXX.
-The container is based on an Ubuntu 16.04 image.
-Everything works fine in this container.
+To facilitate replication, we have published a [containerized version](https://hub.docker.com/r/jamiedavis/daviscoghlanservantlee-fse18-regexartifact/) of this project on hub.docker.com.
+The container is based on an Ubuntu 16.04 image so it is fairly large.
+  
+For example, you might run:
+
+```
+docker pull jamiedavis/daviscoghlanservantlee-fse18-regexartifact
+docker run -ti jamiedavis/daviscoghlanservantlee-fse18-regexartifact
+> vim .env
+# Set ECOSYSTEM_REGEXP_PROJECT_ROOT=/davis-fse18-artifact/EcosystemREDOS-FSE18
+> . .env
+> ./full-analysis/analyze-regexp.pl ./full-analysis/test/vuln-email.json
+```
 
 ## Use
 
