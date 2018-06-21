@@ -67,7 +67,7 @@ Use this to confirm that the code is installed and working. Whether you think it
 ## Directory structure
 
 | File or Directory/    | Description | Relevance to paper |
-| ---------------------:|:-------------------------------------------------------------------------------------------------:|
+|:---------------------:|:------------|:-------------------------------------------------------------------------------------:|
 | .                     | Introductory content                                      | - |
 | README.md             | You're in it                                              | - |
 | LICENSE               | Terms of software release                                 | - |
